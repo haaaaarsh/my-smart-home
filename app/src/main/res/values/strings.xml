@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">MySmartHome</string>
 
+    <!--    Toolbar Titles-->
+    <string name="title_tutorial">Tutorial</string>
+
     <!--    Gesture List-->
     <string name="gesture_list_title">Select a Gesture</string>
 
-    <!--    Practice-->
-    <string name="title_practice">Practice Gesture</string>
+    <!--    Tutorial-->
+    <string name="btn_practice">Practice</string>
+
 </resources>

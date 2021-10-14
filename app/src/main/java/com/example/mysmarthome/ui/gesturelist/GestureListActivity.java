@@ -1,32 +1,24 @@
 package com.example.mysmarthome.ui.gesturelist;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.example.mysmarthome.MySmartHomeApp;
 import com.example.mysmarthome.R;
 import com.example.mysmarthome.databinding.ActivityGestureListBinding;
-import com.example.mysmarthome.databinding.ActivitySplashBinding;
 import com.example.mysmarthome.ui.base.BaseActivity;
-import com.example.mysmarthome.ui.practice.PracticeActivity;
-import com.example.mysmarthome.ui.splash.SplashNavigator;
-import com.example.mysmarthome.ui.splash.SplashViewModel;
-import com.example.mysmarthome.ui.splash.SplashViewModelFactory;
+import com.example.mysmarthome.ui.tutorial.TutorialActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class GestureListActivity extends BaseActivity<GestureListViewModel> implements GestureListNavigator, AdapterView.OnItemSelectedListener {
 
@@ -74,7 +66,7 @@ public class GestureListActivity extends BaseActivity<GestureListViewModel> impl
         if (position > 0) {
             String gesture = gestureNameList.get(position);
             setCurrentGesture(gesture);
-            openActivity(PracticeActivity.class);
+            openActivity(TutorialActivity.class);
         }
     }
 

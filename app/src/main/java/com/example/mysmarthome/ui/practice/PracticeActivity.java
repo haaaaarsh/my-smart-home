@@ -2,25 +2,22 @@ package com.example.mysmarthome.ui.practice;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.mysmarthome.MySmartHomeApp;
 import com.example.mysmarthome.R;
-import com.example.mysmarthome.databinding.ActivityGestureListBinding;
 import com.example.mysmarthome.databinding.ActivityPracticeBinding;
 import com.example.mysmarthome.ui.base.BaseActivity;
 
 import java.util.List;
 
-public class PracticeActivity extends BaseActivity<PracticeViewModel> implements PracticeNavigator, AdapterView.OnItemSelectedListener {
+public class PracticeActivity extends BaseActivity<PracticeViewModel> implements PracticeNavigator {
 
     ActivityPracticeBinding binding;
-    List<String> gestureNameList;
 
     @NonNull
     @Override
@@ -36,6 +33,7 @@ public class PracticeActivity extends BaseActivity<PracticeViewModel> implements
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         viewModel.setNavigator(this);
         setToolBar();
+        setViews();
     }
 
     @Override
@@ -51,19 +49,12 @@ public class PracticeActivity extends BaseActivity<PracticeViewModel> implements
 
     private void setToolBar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.title_practice);
+        getSupportActionBar().setTitle(R.string.title_tutorial);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (position > 0) {
-            String gesture = gestureNameList.get(position);
-            setCurrentGesture(gesture);
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+    private void setViews() {
+        String currentGesture = ((MySmartHomeApp) getApplication()).getGestureMap().get(getCurrentGesture());
+        viewModel.setGesture(currentGesture);
+        getSupportActionBar().setTitle(currentGesture);
     }
 }
