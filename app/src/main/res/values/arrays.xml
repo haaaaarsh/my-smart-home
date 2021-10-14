@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gestureList">
+        <item>Please select a gesture</item>
+        <item>Turn On Light</item>
+        <item>Turn Off Light</item>
+        <item>Turn On Fan</item>
+        <item>Turn Off Fan</item>
+        <item>Increase Fan Speed</item>
+        <item>Decrease Fan Speed</item>
+        <item>Set Thermostat to specified temperature</item>
+        <item>Number Gesture 0</item>
+        <item>Number Gesture 1</item>
+        <item>Number Gesture 2</item>
+        <item>Number Gesture 3</item>
+        <item>Number Gesture 4</item>
+        <item>Number Gesture 5</item>
+        <item>Number Gesture 6</item>
+        <item>Number Gesture 7</item>
+        <item>Number Gesture 8</item>
+        <item>Number Gesture 9</item>
+    </string-array>
+</resources>

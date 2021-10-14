@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MySmartHome</string>
+
+    <!--    Gesture List-->
+    <string name="gesture_list_title">Select a Gesture</string>
+
+    <!--    Practice-->
+    <string name="title_practice">Practice Gesture</string>
 </resources>

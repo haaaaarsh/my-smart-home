@@ -34,6 +34,7 @@ public class SplashActivity extends BaseActivity<SplashViewModel> implements Spl
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         viewModel.setNavigator(this);
         decideNextActivity();
+        getSupportActionBar().hide();
     }
 
     private void decideNextActivity() {
@@ -43,7 +44,7 @@ public class SplashActivity extends BaseActivity<SplashViewModel> implements Spl
                 openActivity(GestureListActivity.class);
                 finish();
             }
-        }, TimeUnit.SECONDS.toMillis(2));
+        }, TimeUnit.SECONDS.toMillis(1));
     }
 
     private void setDataBindings() {

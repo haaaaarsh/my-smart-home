@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.gesturelist.GestureListActivity">
+    tools:context=".ui.practice.PracticeActivity">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.example.mysmarthome.ui.gesturelist.GestureListViewModel" />
+            type="com.example.mysmarthome.ui.practice.PracticeViewModel" />
     </data>
 
     <RelativeLayout
