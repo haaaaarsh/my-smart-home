@@ -1,7 +1,10 @@
 package com.example.mysmarthome.ui.tutorial;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.MediaController;
 
@@ -22,6 +25,7 @@ public class TutorialActivity extends BaseActivity<TutorialViewModel> implements
 
     ActivityTutorialBinding binding;
     List<String> gestureNameList;
+    private final int CAMERA_PERMISSION_REQUEST_CODE = 0x01;
 
     @NonNull
     @Override
@@ -47,7 +51,8 @@ public class TutorialActivity extends BaseActivity<TutorialViewModel> implements
 
     @Override
     public void openPracticeActivity() {
-        openActivity(PracticeActivity.class);
+        if (checkPermission())
+            openActivity(PracticeActivity.class);
     }
 
     private void setDataBindings() {
@@ -135,5 +140,33 @@ public class TutorialActivity extends BaseActivity<TutorialViewModel> implements
                 break;
         }
         return res;
+    }
+
+    private boolean checkPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_PERMISSION_REQUEST_CODE);
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CAMERA_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    openActivity(PracticeActivity.class);
+                break;
+        }
     }
 }

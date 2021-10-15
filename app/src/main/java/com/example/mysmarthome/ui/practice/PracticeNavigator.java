@@ -6,4 +6,10 @@ public interface PracticeNavigator {
 
     Context getActivityContext();
 
+    void onError(String message);
+
+    void onSuccess(String message);
+
+    void recordClick();
+
 }

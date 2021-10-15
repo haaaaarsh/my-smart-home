@@ -10,4 +10,7 @@
     <!--    Tutorial-->
     <string name="btn_practice">Practice</string>
 
+    <!--    Practice-->
+    <string name="btn_upload">Upload</string>
+
 </resources>

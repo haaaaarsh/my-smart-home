@@ -12,6 +12,14 @@ public class PracticeViewModel extends BaseViewModel<PracticeNavigator> {
 
     }
 
+    public void record() {
+        getNavigator().recordClick();
+    }
+
+    public void upload() {
+
+    }
+
     public ObservableField<String> getGesture() {
         return gesture;
     }
