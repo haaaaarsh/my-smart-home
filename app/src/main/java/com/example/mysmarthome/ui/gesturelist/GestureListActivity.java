@@ -1,11 +1,17 @@
 package com.example.mysmarthome.ui.gesturelist;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +21,7 @@ import com.example.mysmarthome.MySmartHomeApp;
 import com.example.mysmarthome.R;
 import com.example.mysmarthome.databinding.ActivityGestureListBinding;
 import com.example.mysmarthome.ui.base.BaseActivity;
+import com.example.mysmarthome.ui.practice.PracticeActivity;
 import com.example.mysmarthome.ui.tutorial.TutorialActivity;
 
 import java.util.ArrayList;
@@ -38,6 +45,12 @@ public class GestureListActivity extends BaseActivity<GestureListViewModel> impl
         setDataBindings();
         viewModel.setNavigator(this);
         setSpinner();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.spinner.setSelection(0);
     }
 
     @Override
@@ -65,7 +78,7 @@ public class GestureListActivity extends BaseActivity<GestureListViewModel> impl
         if (position > 0) {
             String gesture = gestureNameList.get(position);
             setCurrentGesture(gesture);
-            openActivity(TutorialActivity.class);
+            openTutorialActivityForResult();
         }
     }
 
@@ -73,4 +86,27 @@ public class GestureListActivity extends BaseActivity<GestureListViewModel> impl
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    private void openTutorialActivityForResult() {
+        Intent intent = new Intent(this, TutorialActivity.class);
+        tutorialActivityResultLauncher.launch(intent);
+    }
+
+    ActivityResultLauncher<Intent> tutorialActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        int success = data.getIntExtra("success", 0);
+                        String message = data.getStringExtra("message");
+                        if (success == 1) {
+                            showSnackbar(message, Color.MAGENTA, Color.WHITE);
+                        } else if (success == 0) {
+                            showSnackbar(message, Color.RED, Color.WHITE);
+                        }
+                    }
+                }
+            });
 }

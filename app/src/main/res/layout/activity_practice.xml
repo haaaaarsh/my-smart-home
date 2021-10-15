@@ -7,6 +7,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.mysmarthome.ui.practice.PracticeViewModel" />
@@ -32,7 +34,9 @@
             android:onClick="@{() -> viewModel.record()}"
             android:src="@drawable/ic_record"
             app:backgroundTint="@android:color/holo_red_light"
-            app:tint="@color/white" />
+            android:enabled="@{viewModel.isLoading ? false : true}"
+            app:tint="@color/white"
+            android:elevation="0dp"/>
 
         <TextView
             android:id="@+id/timer"
@@ -60,5 +64,17 @@
             android:text="@string/btn_upload"
             android:visibility="gone" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}">
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

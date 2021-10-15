@@ -1,17 +1,22 @@
 package com.example.mysmarthome.ui.tutorial;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.MediaController;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -20,8 +25,6 @@ import com.example.mysmarthome.R;
 import com.example.mysmarthome.databinding.ActivityTutorialBinding;
 import com.example.mysmarthome.ui.base.BaseActivity;
 import com.example.mysmarthome.ui.practice.PracticeActivity;
-
-import java.util.List;
 
 public class TutorialActivity extends BaseActivity<TutorialViewModel> implements TutorialNavigator {
 
@@ -52,8 +55,36 @@ public class TutorialActivity extends BaseActivity<TutorialViewModel> implements
     @Override
     public void openPracticeActivity() {
         if (checkPermission())
-            openActivity(PracticeActivity.class);
+            openPracticeActivityForResult();
     }
+
+    private void openPracticeActivityForResult() {
+        Intent intent = new Intent(this, PracticeActivity.class);
+        practiceActivityResultLauncher.launch(intent);
+    }
+
+    ActivityResultLauncher<Intent> practiceActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        int success = data.getIntExtra("success", 0);
+                        String message = data.getStringExtra("message");
+                        if (success == 1) {
+                            Intent intent = new Intent();
+                            intent.putExtra("success", success);
+                            intent.putExtra("message", message);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        } else if (success == 0) {
+                            showSnackbar(message, Color.RED, Color.WHITE);
+                        }
+                    }
+                }
+            });
+
 
     @Override
     public void replay() {
@@ -176,7 +207,7 @@ public class TutorialActivity extends BaseActivity<TutorialViewModel> implements
         switch (requestCode) {
             case CAMERA_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    openActivity(PracticeActivity.class);
+                    openPracticeActivityForResult();
                 break;
         }
     }

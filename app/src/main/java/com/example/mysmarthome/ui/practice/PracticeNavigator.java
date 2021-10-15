@@ -12,4 +12,6 @@ public interface PracticeNavigator {
 
     void recordClick();
 
+    void uploadRequest();
+
 }

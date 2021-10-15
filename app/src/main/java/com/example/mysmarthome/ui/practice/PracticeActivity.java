@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.daasuu.camerarecorder.CameraRecordListener;
@@ -23,6 +24,7 @@ import com.daasuu.camerarecorder.CameraRecorderBuilder;
 import com.daasuu.camerarecorder.LensFacing;
 import com.example.mysmarthome.MySmartHomeApp;
 import com.example.mysmarthome.R;
+import com.example.mysmarthome.data.model.UploadVideoResponse;
 import com.example.mysmarthome.databinding.ActivityPracticeBinding;
 import com.example.mysmarthome.ui.base.BaseActivity;
 import com.example.mysmarthome.utils.SampleGLView;
@@ -38,6 +40,7 @@ public class PracticeActivity extends BaseActivity<PracticeViewModel> implements
     private SampleGLView sampleGLView;
     protected CameraRecorder cameraRecorder;
     private String filepath;
+    private String filename;
     protected LensFacing lensFacing = LensFacing.FRONT;
     protected int cameraWidth = 1280;
     protected int cameraHeight = 720;
@@ -111,7 +114,7 @@ public class PracticeActivity extends BaseActivity<PracticeViewModel> implements
     @Override
     public void recordClick() {
         File file;
-        String filename = String.format("%s_PRACTICE_%d.mp4", getCurrentGesture(), practiceNum);
+        filename = String.format("%s_PRACTICE_%d.mp4", getCurrentGesture(), practiceNum);
         practiceNum++;
         file = new File(this.getCacheDir(), filename);
         filepath = file.getAbsolutePath();
@@ -120,6 +123,33 @@ public class PracticeActivity extends BaseActivity<PracticeViewModel> implements
         if (binding.btnUpload.getVisibility() == View.VISIBLE)
             binding.btnUpload.setVisibility(View.GONE);
         startTimer();
+    }
+
+    @Override
+    public void uploadRequest() {
+        String path = filepath;
+        String name = filename;
+        viewModel.uploadRequest(path, name);
+        viewModel.getUploadVideoResponseLiveData().observe(this, new Observer<UploadVideoResponse>() {
+            @Override
+            public void onChanged(UploadVideoResponse uploadVideoResponse) {
+                if (uploadVideoResponse != null) {
+                    if (uploadVideoResponse.getSuccess() == 1) {
+                        onSuccess(uploadVideoResponse.getMessage());
+                    } else if (uploadVideoResponse.getSuccess() == 0) {
+                        onError(uploadVideoResponse.getMessage());
+                    }
+                }
+                int success = uploadVideoResponse != null ? uploadVideoResponse.getSuccess() : 0;
+                String message = uploadVideoResponse != null ? uploadVideoResponse.getMessage() : "Video Upload Failed!";
+                viewModel.setIsLoading(false);
+                Intent intent = new Intent();
+                intent.putExtra("success", success);
+                intent.putExtra("message", message);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
     }
 
     private void releaseCamera() {
