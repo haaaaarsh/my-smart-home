@@ -11,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mysmarthome.MySmartHomeApp;
 import com.example.mysmarthome.utils.SharedPreferenceHelper;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Map;
 
 public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivity {
 
@@ -33,6 +36,15 @@ public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivi
 
     public String getCurrentGesture() {
         return SharedPreferenceHelper.getSharedPreferenceString(this, "CurrentGesture", null);
+    }
+
+    public void updateGestureCount(String gesture, Integer count) {
+        ((MySmartHomeApp) getApplication()).updateGestureCount(gesture, count);
+    }
+
+    public int getGestureCount(String gesture) {
+        Map<String, Integer> map = ((MySmartHomeApp) getApplication()).getGestureCountMap();
+        return map.get(gesture);
     }
 
     public void openActivity(Class activity) {

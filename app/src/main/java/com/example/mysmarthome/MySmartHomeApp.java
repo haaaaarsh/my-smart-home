@@ -15,12 +15,14 @@ public class MySmartHomeApp extends Application {
     }
 
     private Map<String, String> gestureMap;
+    private Map<String, Integer> gestureCountMap;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
         setGestureMap();
+        setGestureCountMap();
     }
 
     private void setGestureMap() {
@@ -45,7 +47,36 @@ public class MySmartHomeApp extends Application {
         gestureMap.put("Num9", "Number Gesture 9");
     }
 
+    private void setGestureCountMap() {
+        gestureCountMap = new LinkedHashMap<>();
+        gestureCountMap.put("LightOn", 0);
+        gestureCountMap.put("LightOff", 0);
+        gestureCountMap.put("FanOn", 0);
+        gestureCountMap.put("FanOff", 0);
+        gestureCountMap.put("FanUp", 0);
+        gestureCountMap.put("FanDown", 0);
+        gestureCountMap.put("SetThermo", 0);
+        gestureCountMap.put("Num0", 0);
+        gestureCountMap.put("Num1", 0);
+        gestureCountMap.put("Num2", 0);
+        gestureCountMap.put("Num3", 0);
+        gestureCountMap.put("Num4", 0);
+        gestureCountMap.put("Num5", 0);
+        gestureCountMap.put("Num6", 0);
+        gestureCountMap.put("Num7", 0);
+        gestureCountMap.put("Num8", 0);
+        gestureCountMap.put("Num9", 0);
+    }
+
     public Map<String, String> getGestureMap() {
         return this.gestureMap;
+    }
+
+    public Map<String, Integer> getGestureCountMap() {
+        return gestureCountMap;
+    }
+
+    public void updateGestureCount(String gesture, Integer count) {
+        this.gestureCountMap.put(gesture, count);
     }
 }

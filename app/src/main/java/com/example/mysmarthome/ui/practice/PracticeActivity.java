@@ -47,7 +47,6 @@ public class PracticeActivity extends BaseActivity<PracticeViewModel> implements
     protected int videoWidth = 720;
     protected int videoHeight = 720;
     CountDownTimer cTimer;
-    private int practiceNum = 1;
 
     @NonNull
     @Override
@@ -113,9 +112,10 @@ public class PracticeActivity extends BaseActivity<PracticeViewModel> implements
 
     @Override
     public void recordClick() {
+        int practiceNum = getGestureCount(getCurrentGesture());
+        updateGestureCount(getCurrentGesture(), ++practiceNum);
         File file;
         filename = String.format("%s_PRACTICE_%d.mp4", getCurrentGesture(), practiceNum);
-        practiceNum++;
         file = new File(this.getCacheDir(), filename);
         filepath = file.getAbsolutePath();
         cameraRecorder.start(filepath);
