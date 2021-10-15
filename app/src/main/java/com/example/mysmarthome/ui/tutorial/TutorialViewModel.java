@@ -16,6 +16,10 @@ public class TutorialViewModel extends BaseViewModel<TutorialNavigator> {
         getNavigator().openPracticeActivity();
     }
 
+    public void replay() {
+        getNavigator().replay();
+    }
+
     public ObservableField<String> getGesture() {
         return gesture;
     }

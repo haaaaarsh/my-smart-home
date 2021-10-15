@@ -3,9 +3,11 @@ package com.example.mysmarthome.ui.tutorial;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.MediaController;
 
 import androidx.annotation.NonNull;
@@ -24,7 +26,6 @@ import java.util.List;
 public class TutorialActivity extends BaseActivity<TutorialViewModel> implements TutorialNavigator {
 
     ActivityTutorialBinding binding;
-    List<String> gestureNameList;
     private final int CAMERA_PERMISSION_REQUEST_CODE = 0x01;
 
     @NonNull
@@ -38,7 +39,6 @@ public class TutorialActivity extends BaseActivity<TutorialViewModel> implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDataBindings();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         viewModel.setNavigator(this);
         setToolBar();
         setViews();
@@ -53,6 +53,12 @@ public class TutorialActivity extends BaseActivity<TutorialViewModel> implements
     public void openPracticeActivity() {
         if (checkPermission())
             openActivity(PracticeActivity.class);
+    }
+
+    @Override
+    public void replay() {
+        binding.video.start();
+        binding.replay.setVisibility(View.GONE);
     }
 
     private void setDataBindings() {
@@ -75,9 +81,14 @@ public class TutorialActivity extends BaseActivity<TutorialViewModel> implements
     private void prepVideo() {
         int videoRes = getVideoResource();
         binding.video.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + videoRes));
-        binding.video.setMediaController(new MediaController(this));
         binding.video.requestFocus();
         binding.video.start();
+        binding.video.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                binding.replay.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private int getVideoResource() {

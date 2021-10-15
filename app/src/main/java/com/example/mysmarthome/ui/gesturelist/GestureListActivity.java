@@ -36,7 +36,6 @@ public class GestureListActivity extends BaseActivity<GestureListViewModel> impl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDataBindings();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         viewModel.setNavigator(this);
         setSpinner();
     }

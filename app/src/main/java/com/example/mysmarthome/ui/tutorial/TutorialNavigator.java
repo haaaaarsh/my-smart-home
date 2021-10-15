@@ -8,4 +8,5 @@ public interface TutorialNavigator {
 
     void openPracticeActivity();
 
+    void replay();
 }

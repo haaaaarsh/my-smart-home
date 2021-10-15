@@ -58,7 +58,6 @@ public class PracticeActivity extends BaseActivity<PracticeViewModel> implements
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setDataBindings();
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         viewModel.setNavigator(this);
         setToolBar();
         setViews();
