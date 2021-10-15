@@ -51,7 +51,7 @@ public abstract class BaseActivity<VM extends ViewModel> extends AppCompatActivi
 
     public void showSnackbar(String message, int bgColor, int txtColor) {
         Snackbar snackbar;
-        snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), message, Snackbar.LENGTH_SHORT);
+        snackbar = Snackbar.make(getWindow().getDecorView().getRootView(), message, Snackbar.LENGTH_LONG);
         View snackBarView = snackbar.getView();
         snackBarView.setBackgroundColor(bgColor);
         TextView textView = (TextView) snackBarView.findViewById(com.google.android.material.R.id.snackbar_text);

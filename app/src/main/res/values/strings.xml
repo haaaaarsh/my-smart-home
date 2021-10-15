@@ -5,7 +5,7 @@
     <string name="title_tutorial">Tutorial</string>
 
     <!--    Gesture List-->
-    <string name="gesture_list_title">Select a Gesture</string>
+    <string name="gesture_list_title">Gesture List</string>
 
     <!--    Tutorial-->
     <string name="btn_practice">Practice</string>

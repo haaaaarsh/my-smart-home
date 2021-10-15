@@ -44,12 +44,12 @@ public class GestureListActivity extends BaseActivity<GestureListViewModel> impl
         super.onCreate(savedInstanceState);
         setDataBindings();
         viewModel.setNavigator(this);
-        setSpinner();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        setSpinner();
         binding.spinner.setSelection(0);
     }
 
