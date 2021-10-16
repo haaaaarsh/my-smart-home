@@ -45,7 +45,7 @@ public class PracticeActivity extends BaseActivity<PracticeViewModel> implements
     protected int cameraWidth = 1280;
     protected int cameraHeight = 720;
     protected int videoWidth = 720;
-    protected int videoHeight = 720;
+    protected int videoHeight = 1280;
     CountDownTimer cTimer;
 
     @NonNull
